@@ -1,0 +1,7 @@
+{
+  "name": "xkd/menu",
+  "description": "menu to php",
+  "require": {
+    "php": "^5.3.3 || ^7.0"
+  }
+}
