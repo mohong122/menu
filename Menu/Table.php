@@ -39,9 +39,10 @@ class Table
     {
         foreach ($data as $val) {
             $cols = new TableCols($val['key'], $val["title"],
-                isset($val['sorter']) ? $val['sorter'] : false,
+                isset($val['sorter']) ? true : false,
                 isset($val['type']) ? $val['type'] : "",
-                isset($val['select']) ? $val['select'] : false
+                isset($val['select']) ? $val['select'] : false,
+                isset($val['filter']) ? true : false
             );
 
             $this->setCols($cols);

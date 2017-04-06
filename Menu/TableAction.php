@@ -18,6 +18,7 @@ class TableAction
     public $modal;
     public $confirm;
     public $condition;  //条件 例如 %s > 1 @status
+    public $tabs;
 
     function __construct($key, $title, $type = "modal")
     {
