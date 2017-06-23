@@ -86,8 +86,6 @@ class Modal
      */
     function setInput($name, $title, $type = "text", $default = "", $disable = false)
     {
-        $is = false;
-
         $input = new Modal\Input();
         $input->name = $name;
         $input->title = $title;
@@ -95,19 +93,11 @@ class Modal
         $input->default = $default;
         $input->disable = $disable;
 
-        foreach ($this->cols as $key => $val) {
-            if ($val['input']['name'] == $name) {
-                $this->cols[$key]['input'] = $input;
-                $is = true;
-            }
-        }
-
-        if (!$is) {
-            $this->addInput($name, $title, $type, $default, $disable);
-        }
+        $this->_setCols('input', $name, $input);
 
         return $this;
     }
+
 
     /**
      * @param $name
@@ -339,9 +329,11 @@ class Modal
      */
     protected function _setCols($type, $name, $value)
     {
+//        print_r($name);
         $is = false;
         foreach ($this->cols as $key => $val) {
-            if (isset($val[$type][$name])) {
+            if (isset($val[$type]->name) && $val[$type]->name == $name) {
+//                print_r($val[$type]->$name);
                 $this->cols[$key][$type] = $value;
                 $is = true;
             }
@@ -351,6 +343,31 @@ class Modal
             $this->cols[] = [$type => $value];
         }
 
+    }
+
+    /**
+     * 删除字段
+     * @param $name
+     * @return $this
+     */
+    function delCols($name)
+    {
+        if (!is_array($name)) {
+            $name = [$name];
+        }
+
+//        print_r($name);
+        foreach ($this->cols as $key => $val) {
+            foreach ($val as $k => $v) {
+                if (in_array($v->name, $name)) {
+                    unset($this->cols[$key]);
+//                    array_splice($this->cols, $key, 1);
+                }
+            }
+        }
+        $this->cols = array_values($this->cols);
+
+        return $this;
     }
 }
 
