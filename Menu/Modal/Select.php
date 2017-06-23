@@ -49,24 +49,3 @@ class Select
     }
 }
 
-class SelectValue
-{
-    public $title;  //显示名称
-    public $value;  //提交数据
-
-    /**
-     * @param mixed $title
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    }
-
-    /**
-     * @param mixed $value
-     */
-    public function setValue($value)
-    {
-        $this->value = $value;
-    }
-}

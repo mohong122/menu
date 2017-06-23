@@ -26,4 +26,69 @@ class TableAction
         $this->title = $title;
         $this->type = $type;
     }
+
+    /**
+     * @param mixed $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @param mixed $key
+     */
+    public function setKey($key)
+    {
+        $this->key = $key;
+    }
+
+    /**
+     * @param string $icon
+     */
+    public function setIcon($icon)
+    {
+        $this->icon = $icon;
+    }
+
+    /**
+     * @param mixed $condition
+     */
+    public function setCondition($condition)
+    {
+        $this->condition = $condition;
+    }
+
+    /**
+     * @param mixed $confirm
+     */
+    public function setConfirm($confirm)
+    {
+        $this->confirm = $confirm;
+    }
+
+    /**
+     * @param mixed $modal
+     */
+    public function setModal($modal)
+    {
+        $this->modal = $modal;
+    }
+
+    /**
+     * @param mixed $tabs
+     */
+    public function setTabs($tabs)
+    {
+        $this->tabs = $tabs;
+    }
 }
+

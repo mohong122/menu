@@ -35,4 +35,52 @@ class TableCols
         $this->select = json_encode($select);
         $this->filter = $filter;
     }
+
+    /**
+     * @param string $key
+     */
+    public function setKey($key)
+    {
+        $this->key = $key;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @param bool $filter
+     */
+    public function setFilter($filter)
+    {
+        $this->filter = $filter;
+    }
+
+    /**
+     * @param string $select
+     */
+    public function setSelect($select)
+    {
+        $this->select = json_encode($select);
+    }
+
+    /**
+     * @param bool $sorter
+     */
+    public function setSorter($sorter)
+    {
+        $this->sorter = $sorter;
+    }
 }

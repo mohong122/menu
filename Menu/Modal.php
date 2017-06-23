@@ -66,12 +66,8 @@ class Modal
      */
     function addInput($name, $title, $type = "text", $default = "", $disable = false)
     {
-        $input = new Modal\Input();
-        $input->name = $name;
-        $input->title = $title;
-        $input->type = $type;
-        $input->default = $default;
-        $input->disable = $disable;
+        $input = new Modal\Input($name, $title, $type, $default, $disable);
+
         $this->cols[] = ['input' => $input];
         return $this;
     }
@@ -86,13 +82,7 @@ class Modal
      */
     function setInput($name, $title, $type = "text", $default = "", $disable = false)
     {
-        $input = new Modal\Input();
-        $input->name = $name;
-        $input->title = $title;
-        $input->type = $type;
-        $input->default = $default;
-        $input->disable = $disable;
-
+        $input = new Modal\Input($name, $title, $type, $default, $disable);
         $this->_setCols('input', $name, $input);
 
         return $this;
@@ -138,9 +128,7 @@ class Modal
         $select->default = $default;
 
         foreach ($value as $key => $val) {
-            $selectValue = new Modal\SelectValue();
-            $selectValue->title = $val;
-            $selectValue->value = $key;
+            $selectValue = new Modal\SelectValue($val, $key);
             $select->value[] = $selectValue;
         }
 
@@ -165,9 +153,7 @@ class Modal
         $select->default = $default;
 
         foreach ($value as $key => $val) {
-            $selectValue = new Modal\SelectValue();
-            $selectValue->title = $val;
-            $selectValue->value = $key;
+            $selectValue = new Modal\SelectValue($val, $key);
             $select->value[] = $selectValue;
         }
 
@@ -184,10 +170,8 @@ class Modal
      */
     function addUpload($name, $title)
     {
-        $upload = new Modal\Upload();
-        $upload->name = $name;
-        $upload->title = $title;
-        $this->colgis[] = ["upload" => $upload];
+        $upload = new Modal\Upload($name, $title);
+        $this->cols[] = ["upload" => $upload];
         return $this;
     }
 
@@ -199,9 +183,7 @@ class Modal
      */
     function setUpload($name, $title)
     {
-        $upload = new Modal\Upload();
-        $upload->name = $name;
-        $upload->title = $title;
+        $upload = new Modal\Upload($name, $title);
         $this->_setCols('upload', $name, $upload);
         return $this;
     }
@@ -329,13 +311,14 @@ class Modal
      */
     protected function _setCols($type, $name, $value)
     {
-//        print_r($name);
         $is = false;
         foreach ($this->cols as $key => $val) {
-            if (isset($val[$type]->name) && $val[$type]->name == $name) {
-//                print_r($val[$type]->$name);
+            if (isset($val[$type]->name) &&
+                $val[$type]->name == $name
+            ) {
                 $this->cols[$key][$type] = $value;
                 $is = true;
+                break;
             }
         }
 
@@ -347,7 +330,7 @@ class Modal
 
     /**
      * 删除字段
-     * @param $name
+     * @param array|string $name
      * @return $this
      */
     function delCols($name)
@@ -356,12 +339,17 @@ class Modal
             $name = [$name];
         }
 
-//        print_r($name);
+        $count = count($name);
+        $init = 0;
         foreach ($this->cols as $key => $val) {
             foreach ($val as $k => $v) {
                 if (in_array($v->name, $name)) {
                     unset($this->cols[$key]);
-//                    array_splice($this->cols, $key, 1);
+                    $init++;
+                    if ($count == $init) {
+                        break;
+                    }
+                    continue;
                 }
             }
         }

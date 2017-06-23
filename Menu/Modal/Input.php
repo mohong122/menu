@@ -17,6 +17,16 @@ class Input
     public $default;
     public $disable;
 
+
+    function __construct($name, $title, $type, $default, $disable)
+    {
+        $this->setName($name);
+        $this->setTitle($title);
+        $this->setType($type);
+        $this->setDefault($default);
+        $this->setDisable($disable);
+    }
+
     /**
      * @param string $type
      */

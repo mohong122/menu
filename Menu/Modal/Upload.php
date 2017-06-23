@@ -14,6 +14,13 @@ class Upload
     public $name;
     public $title;
 
+
+    function __construct($name, $title)
+    {
+        $this->setName($name);
+        $this->setTitle($title);
+    }
+
     /**
      * @param mixed $name
      */

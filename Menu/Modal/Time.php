@@ -13,6 +13,12 @@ class Time
     public $title;
     public $name;
 
+    function __construct($name, $title)
+    {
+        $this->setTitle($name);
+        $this->setName($title);
+    }
+
     /**
      * @param mixed $title
      */
