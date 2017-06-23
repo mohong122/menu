@@ -43,14 +43,38 @@ class Menu
 //        $this->url = $url;
     }
 
+
+    /**
+     * 添加一个子菜单
+     * @param $menu
+     * @return $this
+     */
+    function addSubMenu(Menu $menu)
+    {
+        $this->menu[] = $menu;
+        return $this;
+    }
+
     /**
      * 设置子菜单
      * @param $menu
      * @return $this
      */
-    function setSubMenu($menu)
+    function setSubMenu(Menu $menu)
     {
-        $this->menu[] = $menu;
+        $isExist = false;
+
+        foreach ($this->menu as $key => $val) {
+            if ($val->key == $menu->key) {
+                $this->menu[$key] = $menu;
+                $isExist = true;
+            }
+        }
+        // 兼容上一个版本
+        if (!$isExist) {
+            $this->menu[] = $menu;
+        }
+
         return $this;
     }
 
@@ -65,5 +89,44 @@ class Menu
         return $this;
     }
 
+    /**
+     * @param mixed $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @param bool $children
+     */
+    public function setChildren($children)
+    {
+        $this->children = $children;
+    }
+
+    /**
+     * @param string $icon
+     */
+    public function setIcon($icon)
+    {
+        $this->icon = $icon;
+    }
+
+    /**
+     * @param mixed $key
+     */
+    public function setKey($key)
+    {
+        $this->key = $key;
+    }
 
 }

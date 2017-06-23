@@ -16,6 +16,22 @@ class Confirm
     public $alert;
 
     /**
+     * @param mixed $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @param mixed $alert
+     */
+    public function setAlert($alert)
+    {
+        $this->alert = $alert;
+    }
+
+    /**
      * @param mixed $url
      */
     public function setUrl($url)

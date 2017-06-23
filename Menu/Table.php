@@ -16,6 +16,7 @@ class Table
     public $cols_action = [];
     public $remote = true;
     public $source = "";
+    public $pk = "id";
 
     function setCols(TableCols $cols)
     {

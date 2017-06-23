@@ -21,8 +21,8 @@ class Modal
     public $cols = [];
     public $type;
 
-    const MODAL_TYPE_AUDIT = 'audit';  //审核模式
 
+    const MODAL_TYPE_AUDIT = 'audit';  //审核模式
 
     function __construct($before_url = '', $after_url = '', $type = '')
     {
@@ -64,7 +64,7 @@ class Modal
      * @param bool $disable
      * @return $this
      */
-    function setInput($name, $title, $type = "text", $default = "", $disable = false)
+    function addInput($name, $title, $type = "text", $default = "", $disable = false)
     {
         $input = new Modal\Input();
         $input->name = $name;
@@ -78,14 +78,87 @@ class Modal
 
     /**
      * @param $name
+     * @param $title
+     * @param string $type
+     * @param string $default
+     * @param bool $disable
      * @return $this
      */
-    function setHidden($name)
+    function setInput($name, $title, $type = "text", $default = "", $disable = false)
+    {
+        $is = false;
+
+        $input = new Modal\Input();
+        $input->name = $name;
+        $input->title = $title;
+        $input->type = $type;
+        $input->default = $default;
+        $input->disable = $disable;
+
+        foreach ($this->cols as $key => $val) {
+            if ($val['input']['name'] == $name) {
+                $this->cols[$key]['input'] = $input;
+                $is = true;
+            }
+        }
+
+        if (!$is) {
+            $this->addInput($name, $title, $type, $default, $disable);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param $name
+     * @return $this
+     */
+    function addHidden($name)
     {
         $hidden = new Modal\Hidden($name);
         $this->cols[] = ['hidden' => $hidden];
         return $this;
     }
+
+
+    /**
+     * @param $name
+     * @return $this
+     */
+    function setHidden($name)
+    {
+        $hidden = new Modal\Hidden($name);
+
+        $this->_setCols('hidden', $name, $hidden);
+        return $this;
+    }
+
+    /**
+     * @param $name
+     * @param $title
+     * @param array $value
+     * @param $default
+     * @return $this
+     */
+    function addSelect($name, $title, array $value, $default)
+    {
+        $select = new Modal\Select();
+        $select->name = $name;
+        $select->title = $title;
+        $select->default = $default;
+
+        foreach ($value as $key => $val) {
+            $selectValue = new Modal\SelectValue();
+            $selectValue->title = $val;
+            $selectValue->value = $key;
+            $select->value[] = $selectValue;
+        }
+
+
+        $this->cols[] = ['select' => $select];
+        return $this;
+    }
+
 
     /**
      * @param $name
@@ -108,12 +181,28 @@ class Modal
             $select->value[] = $selectValue;
         }
 
+        $this->_setCols('select', $name, $select);
 
-        $this->cols[] = ['select' => $select];
         return $this;
     }
 
     /**
+     * 新增upload
+     * @param $name
+     * @param $title
+     * @return $this
+     */
+    function addUpload($name, $title)
+    {
+        $upload = new Modal\Upload();
+        $upload->name = $name;
+        $upload->title = $title;
+        $this->colgis[] = ["upload" => $upload];
+        return $this;
+    }
+
+    /**
+     * 设置upload
      * @param $name
      * @param $title
      * @return $this
@@ -123,7 +212,7 @@ class Modal
         $upload = new Modal\Upload();
         $upload->name = $name;
         $upload->title = $title;
-        $this->cols[] = ["upload" => $upload];
+        $this->_setCols('upload', $name, $upload);
         return $this;
     }
 
@@ -132,7 +221,7 @@ class Modal
      * @param $title
      * @return $this
      */
-    function setRangetime($name, $title)
+    function addRangetime($name, $title)
     {
         $range = new Modal\RangeTime($name, $title);
         $this->cols[] = ["rangetime" => $range];
@@ -145,7 +234,21 @@ class Modal
      * @param $title
      * @return $this
      */
-    function setLabel($name, $title)
+    function setRangetime($name, $title)
+    {
+        $range = new Modal\RangeTime($name, $title);
+        $this->_setCols('rangetime', $name, $range);
+        return $this;
+
+    }
+
+
+    /**
+     * @param $name
+     * @param $title
+     * @return $this
+     */
+    function addLabel($name, $title)
     {
         $label = new Modal\Label($name, $title);
         $this->cols[] = ['label' => $label];
@@ -156,11 +259,25 @@ class Modal
     /**
      * @param $name
      * @param $title
+     * @return $this
+     */
+    function setLabel($name, $title)
+    {
+        $label = new Modal\Label($name, $title);
+        $this->_setCols('label', $name, $label);
+        return $this;
+
+    }
+
+    /**
+     * 新增image
+     * @param $name
+     * @param $title
      * @param $width
      * @param $height
      * @return $this
      */
-    function setImage($name, $title, $width, $height)
+    function addImage($name, $title, $width, $height)
     {
         $image = new Modal\Image($name, $title, $width, $height);
         $this->cols[] = ['image' => $image];
@@ -168,6 +285,38 @@ class Modal
     }
 
     /**
+     * 设置image
+     * @param $name
+     * @param $title
+     * @param $width
+     * @param $height
+     * @return $this
+     */
+    function setImage($name, $title, $width, $height)
+    {
+        $image = new Modal\Image($name, $title, $width, $height);
+
+        $this->_setCols('image', $name, $image);
+        return $this;
+    }
+
+    /**
+     * 新增video
+     * @param $name
+     * @param $title
+     * @param $width
+     * @param $height
+     * @return $this
+     */
+    function addVideo($name, $title, $width = 0, $height = 0)
+    {
+        $video = new Modal\Video($name, $title, $width, $height);
+        $this->cols[] = ['video' => $video];
+        return $this;
+    }
+
+    /**
+     * 设置video
      * @param $name
      * @param $title
      * @param $width
@@ -176,9 +325,32 @@ class Modal
      */
     function setVideo($name, $title, $width = 0, $height = 0)
     {
+
         $video = new Modal\Video($name, $title, $width, $height);
-        $this->cols[] = ['video' => $video];
+        $this->_setCols('video', $name, $video);
         return $this;
+    }
+
+    /**
+     * 设置字段的值，不存在时，创建新的
+     * @param $type
+     * @param $name
+     * @param $value
+     */
+    protected function _setCols($type, $name, $value)
+    {
+        $is = false;
+        foreach ($this->cols as $key => $val) {
+            if (isset($val[$type][$name])) {
+                $this->cols[$key][$type] = $value;
+                $is = true;
+            }
+        }
+
+        if (!$is) {
+            $this->cols[] = [$type => $value];
+        }
+
     }
 }
 
