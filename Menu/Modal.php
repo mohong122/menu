@@ -357,6 +357,79 @@ class Modal
 
         return $this;
     }
+
+    /**
+     * @param $name
+     * @param $title
+     * @param $value
+     * @return $this
+     */
+    function addCheckbox($name, $title, $value)
+    {
+        $checkbox = new Modal\Checkbox($name, $title);
+
+        foreach ($value as $key => $val) {
+            $checkboxValue = new Modal\CheckboxValue($val, $key);
+            $checkbox->value[] = $checkboxValue;
+        }
+        $this->cols[] = ['checkbox' => $checkbox];
+        return $this;
+    }
+
+    /**
+     * @param $name
+     * @param $title
+     * @param $value
+     * @return $this
+     */
+    function setCheckbox($name, $title, $value)
+    {
+        $checkbox = new Modal\Checkbox($name, $title);
+
+        foreach ($value as $key => $val) {
+            $checkboxValue = new Modal\CheckboxValue($val, $key);
+            $checkbox->value[] = $checkboxValue;
+        }
+        $this->_setCols('checkbox', $name, $checkbox);
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     * @param string $title
+     * @param $value
+     * @return $this
+     */
+    function addRadio($name, $title, $value)
+    {
+        $radio = new Modal\Checkbox($name, $title);
+
+        foreach ($value as $key => $val) {
+            $radioValue = new Modal\RadioValue($val, $key);
+            $radio->value[] = $radioValue;
+        }
+        $this->cols[] = ['radio' => $radio];
+        return $this;
+    }
+
+    /**
+     * 设置radio
+     * @param $name
+     * @param $title
+     * @param $value
+     * @return $this
+     */
+    function setRadio($name, $title, $value)
+    {
+        $radio = new Modal\Checkbox($name, $title);
+
+        foreach ($value as $key => $val) {
+            $radioValue = new Modal\RadioValue($val, $key);
+            $radio->value[] = $radioValue;
+        }
+        $this->_setCols('radio', $name, $value);
+        return $this;
+    }
 }
 
 
