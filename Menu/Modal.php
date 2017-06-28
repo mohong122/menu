@@ -303,13 +303,26 @@ class Modal
         return $this;
     }
 
+
+    /**
+     * 新增段的值，
+     * @param $type
+     * @param $name
+     * @param $value
+     */
+    function _addCols($type, $name, $value)
+    {
+        $this->cols[] = [$type => $value];
+
+    }
+
     /**
      * 设置字段的值，不存在时，创建新的
      * @param $type
      * @param $name
      * @param $value
      */
-    protected function _setCols($type, $name, $value)
+    function _setCols($type, $name, $value)
     {
         $is = false;
         foreach ($this->cols as $key => $val) {
