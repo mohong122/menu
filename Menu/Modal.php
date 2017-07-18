@@ -356,7 +356,9 @@ class Modal
         $init = 0;
         foreach ($this->cols as $key => $val) {
             foreach ($val as $k => $v) {
-                if (in_array($v->name, $name)) {
+                if ((is_object($v) && in_array($v->name, $name)) ||
+                    (is_array($v) && in_array($v['name'], $name))
+                ) {
                     unset($this->cols[$key]);
                     $init++;
                     if ($count == $init) {
