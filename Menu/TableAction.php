@@ -19,6 +19,7 @@ class TableAction
     public $confirm;
     public $condition;  //条件 例如 %s > 1 @status
     public $tabs;
+    public $batch = false;
 
     function __construct($key, $title, $type = "modal")
     {
@@ -89,6 +90,14 @@ class TableAction
     public function setTabs($tabs)
     {
         $this->tabs = $tabs;
+    }
+
+    /**
+     * @param bool $batch
+     */
+    public function setBatch($batch = false)
+    {
+        $this->batch = $batch;
     }
 }
 
