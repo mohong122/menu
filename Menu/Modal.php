@@ -215,6 +215,91 @@ class Modal
     }
 
 
+
+
+    /**
+     * 新增日期Date
+     * @param $name
+     * @param $title
+     * @return $this
+     */
+    function addDate($name, $title)
+    {
+        $date = new Modal\Date($name, $title);
+        $this->cols[] = ["date" => $date];
+        return $this;
+
+    }
+
+    /**
+     *修改日期Date
+     * @param $name
+     * @param $title
+     * @return $this
+     */
+    function setDate($name, $title)
+    {
+        $date = new Modal\Date($name, $title);
+        $this->_setCols('date', $name, $date);
+        return $this;
+    }
+
+
+    /**
+     * 新增日期 Datetime 2017-01-01 01:10:01
+     * @param $name
+     * @param $title
+     * @return $this
+     */
+    function addDatetime($name, $title)
+    {
+        $datetime = new Modal\Datetime($name, $title);
+        $this->cols[] = ["datetime" => $datetime];
+        return $this;
+    }
+
+    /**
+     *修改日期Datetime 2017-01-01 01:10:01
+     * @param $name
+     * @param $title
+     * @return $this
+     */
+    function setDatetime($name, $title)
+    {
+        $datetime = new Modal\Datetime($name, $title);
+        $this->_setCols('datetime', $name, $datetime);
+        return $this;
+    }
+
+
+    /**
+     * 新增日期 time 01:10:01
+     * @param $name
+     * @param $title
+     * @return $this
+     */
+    function addTime($name, $title)
+    {
+        $time = new Modal\Time($name, $title);
+        $this->cols[] = ["time" => $time];
+        return $this;
+    }
+
+    /**
+     *修改日期time 01:10:01
+     * @param $name
+     * @param $title
+     * @return $this
+     */
+    function setTime($name, $title)
+    {
+        $time = new Modal\Time($name, $title);
+        $this->_setCols('time', $name, $time);
+        return $this;
+    }
+
+
+
     /**
      * @param $name
      * @param $title
@@ -314,6 +399,13 @@ class Modal
     {
         $this->cols[] = [$type => $value];
 
+    }
+
+
+    function addCols($type,$name,$value){
+
+        $this->_addCols($type,$name,$value);
+        return $this;
     }
 
     /**
@@ -445,6 +537,8 @@ class Modal
         $this->_setCols('radio', $name, $value);
         return $this;
     }
+
+
 }
 
 

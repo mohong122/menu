@@ -15,6 +15,12 @@ class Date
     public $title;
 
 
+    public function __construct($name, $title)
+    {
+        $this->setName($name);
+        $this->setTitle($title);
+    }
+
     /**
      * @param mixed $title
      */
