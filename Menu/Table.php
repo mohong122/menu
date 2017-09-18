@@ -17,6 +17,7 @@ class Table
     public $remote = true;
     public $source = "";
     public $pk = "id";
+    public $filter = [];
 
 
     /**
@@ -121,7 +122,7 @@ class Table
      */
     function setColsAction(TableAction $action)
     {
-        
+
         $this->cols_action[] = $action;
         return $this;
     }
@@ -143,4 +144,14 @@ class Table
     {
         $this->remote = $remote;
     }
+
+    /**
+     * 筛选
+     * @param TableFilter $filter
+     */
+    public function setFilter(TableFilter $filter)
+    {
+        $this->filter = $filter->cols;
+    }
+
 }
