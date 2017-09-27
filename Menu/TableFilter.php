@@ -130,6 +130,33 @@ class TableFilter
 
 
     /**
+     * @param $name
+     * @param $title
+     * @return $this
+     */
+    function addRangedate($name, $title)
+    {
+        $range = new Modal\RangeDate($name, $title);
+        $this->cols[] = ["rangedate" => $range];
+        return $this;
+
+    }
+
+    /**
+     * @param $name
+     * @param $title
+     * @return $this
+     */
+    function setRangedate($name, $title)
+    {
+        $range = new Modal\RangeDate($name, $title);
+        $this->_setCols('rangedate', $name, $range);
+        return $this;
+
+    }
+
+
+    /**
      * 新增日期Date
      * @param $name
      * @param $title
